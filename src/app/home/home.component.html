@@ -1,0 +1,58 @@
+<ActionBar class="action-bar" title="Lists">
+    <ActionItem (tap)="add()">
+        <Button  text="Add"></Button>
+    </ActionItem>
+</ActionBar>
+<StackLayout class="page">
+    <GridLayout width="100%" height="50%"  rows="*">
+        <RadListView class="list-group" [items]="list"
+                     swipeActions="true"
+                     selectionBehavior="None"
+                     (itemSwipeProgressStarted)="onSwipeCellStarted($event)">
+            <ListViewLinearLayout tkListViewLayout
+                                  scrollDirection="Vertical"
+                                  itemInsertAnimation="Slide"
+                                  itemDeleteAnimation="Slide"></ListViewLinearLayout>
+
+            <ng-template tkListItemTemplate let-expense="item">
+                <DockLayout width="100%" stretchLastChild="false" class="list-group-item listItemDockLayout">
+                    <Label [text]="expense.title" dock="left"></Label>
+                    <Label [text]="expense.cost" dock="right"></Label>
+                </DockLayout>
+            </ng-template>
+
+            <GridLayout *tkListItemSwipeTemplate columns="*, auto" class="gridLayoutLayout">
+                <StackLayout id="delete-view" col="2" class="deleteViewStackLayout" >
+                    <Label text="delete" class="swipeTemplateLabel"
+                           (tap)="removeRegular($event.object.bindingContext)"></Label>
+                </StackLayout>
+            </GridLayout>
+        </RadListView>
+    </GridLayout>
+
+    <GridLayout width="100%" height="50%" rows="*">
+        <RadListView class="list-group" [items]="list$ | async"
+                     swipeActions="true"
+                     selectionBehavior="None"
+                     (itemSwipeProgressStarted)="onSwipeCellStarted($event)">
+            <ListViewLinearLayout tkListViewLayout
+                                  scrollDirection="Vertical"
+                                  itemInsertAnimation="Slide"
+                                  itemDeleteAnimation="Slide"></ListViewLinearLayout>
+
+            <ng-template tkListItemTemplate let-expense="item">
+                <DockLayout width="100%" stretchLastChild="false" class="list-group-item listItemDockLayout">
+                    <Label [text]="expense.title" dock="left"></Label>
+                    <Label [text]="expense.cost" dock="right"></Label>
+                </DockLayout>
+            </ng-template>
+
+            <GridLayout *tkListItemSwipeTemplate columns="*, auto" class="gridLayoutLayout">
+                <StackLayout id="delete-view" col="2" class="deleteViewStackLayout" >
+                    <Label text="delete" class="swipeTemplateLabel"
+                           (tap)="removeRedux($event.object.bindingContext)"></Label>
+                </StackLayout>
+            </GridLayout>
+        </RadListView>
+    </GridLayout>
+</StackLayout>
